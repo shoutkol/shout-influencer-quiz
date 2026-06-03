@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Export Layout Test — SHOUT! Quiz</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  :root{
+    --purple:#721aea; --purple-d:#5712b8; --orange:#ff691d;
+    --bg:#f3f2fb; --card:#fff; --ink:#1e1f3b; --muted:#6f6e8a;
+    --line:#06c755;
+    /* Aesthetic theme — pink */
+    --accent:#ff5d9e; --accent2:#d63d7d;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);font-family:'Prompt',sans-serif;color:var(--ink)}
+
+  .topbar{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid #e6e4f0;padding:14px 22px;
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+  .topbar h1{font-size:17px;font-weight:600;margin:0;color:var(--ink)}
+  .topbar h1 b{color:var(--purple)}
+  .spacer{flex:1}
+  .btn{font-family:inherit;font-weight:600;font-size:14px;cursor:pointer;border:none;border-radius:999px;
+    padding:10px 20px;transition:transform .15s,box-shadow .15s}
+  .btn-primary{background:var(--purple);color:#fff;box-shadow:0 6px 16px rgba(114,26,234,.3)}
+  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(114,26,234,.4)}
+  .btn-primary:disabled{opacity:.6;cursor:wait;transform:none}
+  .btn-ghost{background:#fff;color:var(--purple);border:1.5px solid #ddd6f3}
+  .btn-ghost:hover{border-color:var(--purple)}
+  .meta{font-size:12.5px;color:var(--muted);font-weight:500}
+  .meta b{color:var(--ink);font-weight:600}
+
+  .stage{display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:24px;align-items:start;max-width:1500px;margin:0 auto}
+  @media(max-width:980px){ .stage{grid-template-columns:1fr} }
+  .panel{background:#fff;border-radius:16px;padding:18px;border:1px solid #ece9f5}
+  .panel-title{font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin:0 0 12px}
+  .panel-title .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--purple);margin-right:7px;vertical-align:middle}
+  .out-img{max-width:100%;height:auto;display:block;border-radius:10px;border:1px solid #eee;background:#fafafa}
+  .placeholder{display:grid;place-items:center;height:520px;border:2px dashed #d6d1eb;border-radius:12px;color:var(--muted);font-size:14px;text-align:center;padding:20px}
+
+  /* ====== CARD STYLES — this is the export target ====== */
+  .rcard{position:relative;border-radius:24px;padding:22px 20px;background:var(--card);
+    border:1px solid #eceaf6;box-shadow:0 20px 50px rgba(114,26,234,.13);
+    max-width:520px;margin:0 auto;font-family:'Prompt',sans-serif;color:var(--ink)}
+
+  /* Brand header inside card */
+  .rbrand{display:flex;justify-content:center;align-items:center;gap:8px;margin-bottom:10px}
+  .rbrand img{height:28px;width:auto;display:block}
+  .rbrand .pill{display:inline-block;background:#f3eefe;color:var(--purple);font-size:11px;font-weight:600;
+    padding:3px 9px;border-radius:999px;letter-spacing:.5px}
+
+  .rlabel{text-align:center;font-weight:600;color:var(--orange);font-size:13px;letter-spacing:.4px;margin-bottom:8px}
+
+  .rimgwrap{position:relative;margin:0 auto 22px;max-width:280px}
+  .rimg{width:100%;display:block;border-radius:16px;border:3px solid var(--accent);background:#fff;box-shadow:0 10px 24px rgba(0,0,0,.12);aspect-ratio:4/3;object-fit:cover}
+  .remoji{position:absolute;right:-6px;bottom:-16px;font-size:28px;line-height:1;width:54px;height:54px;border-radius:50%;
+    background:#fff;border:3px solid var(--accent);display:grid;place-items:center;box-shadow:0 6px 14px rgba(0,0,0,.14)}
+
+  .rtitle{text-align:center;font-weight:700;font-size:26px;margin:6px 0 2px;line-height:1.2}
+  .rtag{text-align:center;font-size:12px;color:var(--accent);font-weight:600;letter-spacing:1px;text-transform:uppercase}
+
+  .rlead{font-size:13.5px;line-height:1.55;color:var(--muted);margin:12px 4px 4px;white-space:pre-line;text-align:center}
+
+  .rgrid{display:flex;flex-direction:column;gap:8px;margin-top:12px;text-align:left}
+  .rrow{background:var(--bg);border-radius:12px;padding:10px 13px;border:1px solid #ecebf6}
+  .rrow .h{font-weight:600;font-size:12px;color:var(--accent);margin-bottom:2px}
+  .rrow .v{font-size:13px;line-height:1.45;color:var(--ink);white-space:pre-line}
+
+  .rfoot{font-size:13px;line-height:1.5;color:var(--ink);margin-top:14px;font-weight:500;white-space:pre-line;text-align:center;padding:0 6px}
+
+  /* SHOUT footer inside card */
+  .shout-box{margin-top:18px;border-radius:18px;padding:18px 16px;text-align:center;
+    background:linear-gradient(135deg,#7a23ee 0%,#9b4bff 45%,#ff7a3a 115%);
+    color:#fff}
+  .sb-row{display:flex;align-items:center;gap:14px;justify-content:center;flex-wrap:wrap}
+  .sb-logochip{display:inline-flex;background:#fff;padding:7px 13px;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,.16)}
+  .sb-logochip img{height:24px;width:auto;display:block}
+  .sb-text{flex:1;min-width:140px;text-align:left}
+  .sb-sub{font-size:12.5px;line-height:1.4;color:#fff;font-weight:400;margin-bottom:6px}
+  .sb-sub b{font-weight:600}
+  .qrwrap{background:#fff;border-radius:10px;padding:7px;display:inline-block;box-shadow:0 4px 12px rgba(0,0,0,.18)}
+  #qrcode img,#qrcode canvas{display:block;border-radius:4px}
+  .line-btn{display:inline-flex;align-items:center;gap:7px;text-decoration:none;font-weight:600;font-size:13px;
+    color:#fff;background:var(--line);padding:8px 16px;border-radius:999px;margin-top:6px;
+    box-shadow:0 5px 14px rgba(6,199,85,.4)}
+  .line-btn .lico{width:18px;height:18px;border-radius:5px;background:#fff;color:var(--line);display:grid;place-items:center;font-weight:700;font-size:11px}
+
+  .help{font-size:12px;color:var(--muted);margin-top:14px;text-align:center;line-height:1.5}
+  .help code{background:#f1eef9;padding:2px 6px;border-radius:5px;font-family:ui-monospace,Menlo,monospace;font-size:11.5px}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1><b>Export Test</b> · SHOUT! Quiz result card</h1>
+  <div class="spacer"></div>
+  <span class="meta" id="status">พร้อม export</span>
+  <button class="btn btn-ghost" onclick="rebuildPreview()">🔄 Reload preview</button>
+  <button class="btn btn-primary" id="exportBtn" onclick="runExport()">📸 Export PNG</button>
+</div>
+
+<div class="stage">
+
+  <!-- LEFT: live preview (this is what gets captured) -->
+  <div class="panel">
+    <h3 class="panel-title"><span class="dot"></span> Live preview (จะถูก capture)</h3>
+
+    <div class="rcard" id="rcard">
+      <div class="rbrand">
+        <img id="brandLogo" alt="SHOUT!">
+        <span class="pill">QUIZ</span>
+      </div>
+
+      <div class="rlabel">🎉 ผลลัพธ์ของคุณคือ</div>
+
+      <div class="rimgwrap">
+        <img class="rimg" id="rimg" alt="">
+        <div class="remoji" id="remoji"></div>
+      </div>
+
+      <div class="rtitle" id="rtitle"></div>
+      <div class="rtag" id="rtag"></div>
+      <div class="rlead" id="rlead"></div>
+
+      <div class="rgrid">
+        <div class="rrow"><div class="h">✨ คำพูดประจำตัว</div><div class="v" id="rquote"></div></div>
+        <div class="rrow"><div class="h">⚠️ จุดอ่อน</div><div class="v" id="rweak"></div></div>
+        <div class="rrow"><div class="h">🎯 เหมาะกับ</div><div class="v" id="rfit"></div></div>
+      </div>
+
+      <div class="rfoot" id="rfoot"></div>
+
+      <div class="shout-box">
+        <div class="sb-row">
+          <div class="qrwrap"><div id="qrcode"></div></div>
+          <div class="sb-text">
+            <div class="sb-sub">อยากเป็นอินฟลูตัวจริง?<br>ร่วมงานกับแบรนด์ <b>6,000+</b> ผ่าน SHOUT!</div>
+            <a class="line-btn" href="https://line.me/R/ti/p/@shouter" target="_blank" rel="noopener">
+              <span class="lico">L</span> @shouter
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="help">
+      แก้ CSS/HTML ของ <code>.rcard</code> ในไฟล์นี้ แล้วกด <code>Reload preview</code> → <code>Export PNG</code>
+    </div>
+  </div>
+
+  <!-- RIGHT: exported image -->
+  <div class="panel">
+    <h3 class="panel-title"><span class="dot" style="background:var(--orange)"></span> Exported PNG</h3>
+    <div id="outWrap">
+      <div class="placeholder">กด <b>📸 Export PNG</b> เพื่อดูรูปที่จะได้</div>
+    </div>
+    <div class="help" id="outMeta"></div>
+  </div>
+
+</div>
+
+<script>
+// Mock data — "สาย Aesthetic"
+const MOCK = {
+  emoji: "☁️📷",
+  title: "สาย Aesthetic",
+  tag: "aesthetic",
+  accent: "#ff5d9e",
+  accent2: "#d63d7d",
+  lead: 'คุณคือคนที่ "ใช้ชีวิตเหมือนอยู่ใน Pinterest ตลอดเวลา"\nกาแฟต้องโทนดี โต๊ะต้องคลีน แสงต้องเข้า แม้แต่ไข่ดาวยังต้องจัด composition 😭\nจุดเด่นคือความละมุน ทำอะไรก็ดูดี ดูแพง ดู slow life ไปหมด',
+  quote: '"ขอถ่ายก่อนนะ"',
+  weak: 'ใช้เวลาเลือกฟอนต์มากกว่าตัดคลิป',
+  fit: 'Lifestyle, café hopping, vlog, skincare, fashion, mood & tone content',
+  foot: 'เป็นสายที่คนดูเข้ามา "เสพความสบายตา" โดยไม่รู้ตัว ☁️'
+};
+
+// SHOUT! wordmark — same data URI used in the main brandbar
+const SHOUT_LOGO = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTEyIiBoZWlnaHQ9IjM2IiB2aWV3Qm94PSIwIDAgMTEyIDM2IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNMTA1LjA3IDIxLjMxMkMxMDYuMzM4IDIxLjMxMiAxMDcuMzY3IDIyLjM0MTUgMTA3LjM2NyAyMy42MTE0QzEwNy4zNjcgMjQuODgxMyAxMDYuMzM4IDI1LjkxMDggMTA1LjA3IDI1LjkxMDhDMTAzLjgwMSAyNS45MTA3IDEwMi43NzMgMjQuODgxMyAxMDIuNzczIDIzLjYxMTRDMTAyLjc3MyAyMi4zNDE1IDEwMy44MDEgMjEuMzEyIDEwNS4wNyAyMS4zMTJaIiBmaWxsPSIjMTExNDFCIi8+CjxwYXRoIGQ9Ik0xMDUuMTU5IDkuOTc0NjFDMTA2LjM4NCA5Ljk3NDYxIDEwNy4yNSAxMC45NTA5IDEwNy4zNTUgMTIuMTI3OUMxMDcuNDg1IDEzLjU5MjIgMTA2LjU1MyAxOC4xNDI5IDEwNS44NjkgMjAuNDczMkgxMDQuMzMyQzEwMy43MDMgMTguMTQyOSAxMDMuMTIgMTQuNTkwNyAxMDIuOTQxIDEyLjU3MTRDMTAyLjgwOSAxMS4wODQ4IDEwMy45MzQgOS45NzQ2MSAxMDUuMTU5IDkuOTc0NjFaIiBmaWxsPSIjMTExNDFCIi8+CjxwYXRoIGQ9Ik00MC40MTk1IDEzLjI0MjJDNDAuMzc1MiAxMy41NjM5IDQwLjA1NTMgMTMuNzU0NiAzOS43MzMxIDEzLjY0NjRDMzguNjE4IDEzLjI3MzUgMzcuNDYxNiAxMi45OTc0IDM2LjQ0MjUgMTIuOTk3NEMzNS42MDE4IDEyLjk5NzQgMzQuODU4NSAxMy40MDU5IDM0LjkxNjggMTQuMDYyQzM0Ljk4MTEgMTQuNzg2NCAzNS41NjY3IDE1LjI0MDUgMzcuNTI3OSAxNi4zNDkyQzM5LjcwMzQgMTcuNTczMiA0MS4wNjE2IDE5LjA0NDggNDEuMjEwNSAyMC43MjE0QzQxLjQ4OCAyMy44NDY5IDM4Ljk5NDYgMjUuOTU0NyAzNS4yMDA2IDI1Ljk1NDdDMzMuNjA5MSAyNS45NTQ3IDMxLjk3NzYgMjUuNTA1IDMwLjczODQgMjQuODQzMkMzMC41MjEyIDI0LjcyNzkgMzAuMzk5NyAyNC40ODQ1IDMwLjQyNjIgMjQuMjUyNUwzMC42ODAzIDIyLjA2NjRDMzAuNzIzNSAyMS43MDA2IDMxLjExMDggMjEuNTE0MiAzMS40NTc1IDIxLjY4OTJDMzIuNjA2NSAyMi4yNjcxIDMzLjk5MzcgMjIuNzE1NCAzNS4yMzEzIDIyLjcxNTRDMzYuMTE3NyAyMi43MTU0IDM2Ljg0MzYgMjIuMTk0NSAzNi43NzEyIDIxLjM3OUMzNi43MDI4IDIwLjYwOSAzNi4wNjU3IDIwLjA4ODEgMzQuMDgzNSAxOS4wMDA3QzMyLjAwNCAxNy44NDUgMzAuNzI3NyAxNi41MDg2IDMwLjU2NDggMTQuNjc0QzMwLjMxMzMgMTEuODQxNyAzMi44MDc1IDkuOTE3NDggMzYuMDc3NiA5LjkxNzQ4QzM3LjY0OTIgOS45MTc0OCAzOS4wOTMxIDEwLjI2NDggNDAuMjY1MyAxMC42NzA0QzQwLjU0MjEgMTAuNzY1NyA0MC43MjI0IDExLjA0MzMgNDAuNjg0MSAxMS4zMTk0TDQwLjQxOTYgMTMuMjQzNkw0MC40MTk1IDEzLjI0MjJaIiBmaWxsPSIjMTExNDFCIi8+CjxwYXRoIGQ9Ik01NS4zMDkzIDI1Ljk0ODJINTIuMjI5NEM1MS45MDM2IDI1Ljk0ODIgNTEuNjIyMyAyNS42Njg1IDUxLjYyNDcgMjUuMzQ1TDUxLjY0MDggMjAuMDM4OUM1MS42NDE4IDE5LjcxNTQgNTEuNjQ3NyAxOS40MzU3IDUxLjMyMTkgMTkuNDM1N0g0Ny43OTc3QzQ3LjUxMTUgMTkuNDM1NyA0Ny4yOTE0IDE5LjY1MzIgNDcuMjkxMSAxOS45MzcyTDQ3LjI3MzIgMjUuNDQ1M0M0Ny4yNzE1IDI1LjcyOTIgNDcuMDUyOCAyNS45NDY4IDQ2Ljc2NTIgMjUuOTQ2OEg0My42ODM4QzQzLjM1OCAyNS45NDY4IDQzLjA3ODMgMjUuNjY4NSA0My4wNzc5IDI1LjM0NUw0My4wOTUgMTAuNDc4OUM0My4wOTUxIDEwLjE5MzYgNDMuMzE1MyA5Ljk3NjAyIDQzLjYwMjggOS45NzYwMkg0Ni42ODI4QzQ3LjAwODYgOS45NzYwMiA0Ny4yODk5IDEwLjI1NTcgNDcuMjg3NCAxMC41NzkyTDQ3LjI3MjcgMTUuNTQ5NUM0Ny4yNzE3IDE1Ljg3MyA0Ny41NTE1IDE2LjE1MjcgNDcuODc4OCAxNi4xNTI3SDUxLjQwM0M1MS42ODkyIDE2LjE1MjcgNTEuNjIzNSAxNS45MzUyIDUxLjYyNTEgMTUuNjQ5OEw1MS42NDAzIDEwLjQ3NzVDNTEuNjQyIDEwLjE5MzYgNTEuODYwNiA5Ljk3NDYxIDUyLjE0ODIgOS45NzQ2MUg1NS4yMjk1QzU1LjU1NTQgOS45NzQ2MSA1NS44MzUxIDEwLjI1MjkgNTUuODM1NSAxMC41NzY0TDU1LjgxODQgMjUuNDQyNUM1NS44MTgyIDI1LjcyNzggNTUuNTk4MSAyNS45NDU0IDU1LjMxMDUgMjUuOTQ1NEw1NS4zMDkzIDI1Ljk0ODJaIiBmaWxsPSIjMTExNDFCIi8+CjxwYXRoIGQ9Ik02NS4wNzQ1IDI1Ljk2NDhDNjAuNjc3MSAyNS45NjQ4IDU4LjA1OTIgMjIuNjUxOSA1Ny43Mjc4IDE4LjkxOTdDNTcuMzEwNiAxNC4yMjEzIDU5LjczODMgOS45MDQzIDY1LjUwOTkgOS45MDQzQzY5LjU5OSA5LjkwNDMgNzIuMzU5NyAxMy4wNzQyIDcyLjY5MTEgMTYuODA2NEM3My4xMDg0IDIxLjUwNjIgNzAuNTM3OCAyNS45NjQ4IDY1LjA3NDUgMjUuOTY0OFpNNjUuMTg4MSAxMy4xNDA2QzYzLjEzNjcgMTMuMTQwNiA2MS45MDE2IDE1LjQxMDcgNjIuMTY5MSAxOC40MjM5QzYyLjQxMjcgMjEuMTY3MiA2My43MjU4IDIyLjcyNTcgNjUuMzk0NyAyMi43MjU3QzY3LjE2MDMgMjIuNzI1NyA2OC41MTU3IDIwLjMxMjUgNjguMjQ4MiAxNy4yOTk0QzY4LjAwNDYgMTQuNTU2MSA2Ni44MzQyIDEzLjEzOTIgNjUuMTg4IDEzLjEzOTJMNjUuMTg4MSAxMy4xNDA2WiIgZmlsbD0iIzExMTQxQiIvPgo8cGF0aCBkPSJNODcuMzg3MSAyMC4xMzI5Qzg3LjM3NjYgMjMuNTcyNyA4NS40MjY3IDI1Ljk2NDYgODAuOTkyMiAyNS45NjQ2Qzc3LjY5OTcgMjUuOTY0NiA3NC45MTE3IDI0LjI5MzEgNzQuNjI0MiAyMS4wNTU0Qzc0LjYwMDIgMjAuNzg1NiA3NC41NzQzIDIwLjQ5MzIgNzQuNTgzIDIwLjMzNjRMNzQuNTg2NCAxMC40MzU5Qzc0LjU4NjYgMTAuMTUwNiA3NC44MDY2IDkuOTMxNjQgNzUuMDk0MiA5LjkzMTY0SDc3Ljg4OThDNzguMjE1NiA5LjkzMTY0IDc4LjQ5NTMgMTAuMjA5OSA3OC40OTU3IDEwLjUzMzRMNzguNDk2MiAxOS42MTU5Qzc4LjQ5MTUgMTkuODE3OSA3OC40NzgxIDIwLjE3ODEgNzguNDkgMjAuMzEyM0M3OC42MTU4IDIxLjcyOTIgNzkuOTMxNiAyMi40OTM0IDgxLjEyNTkgMjIuNDkzNEM4Mi4yNjExIDIyLjQ5MzQgODMuNDYwNCAyMS43MDY2IDgzLjQ2NzMgMTkuOTk3M0w4My40NzggMTAuNDM0NUM4My40NzgyIDEwLjE0OTIgODMuNjk4MyA5LjkzMTY0IDgzLjk4NTkgOS45MzE2NEg4Ni43ODE1Qzg3LjEwNzMgOS45MzE2NCA4Ny4zODcgMTAuMjA5OSA4Ny4zODc0IDEwLjUzMzRMODcuMzg4NSAyMC4xMzI5SDg3LjM4NzFaIiBmaWxsPSIjMTExNDFCIi8+CjxwYXRoIGQ9Ik0xMDAuMzg4IDEzLjE2OTRIOTcuODAyQzk3LjUxNDQgMTMuMTY5NCA5Ny4xNTE1IDEzLjM4ODMgOTcuMTUxNCAxMy42NzM3TDk3LjE1NjQgMTkuNDgxTDk3LjE2MTUgMjUuNDMxNEM5Ny4xNjEzIDI1LjcxNjcgOTYuOTQxMyAyNS45MzU3IDk2LjY1MzcgMjUuOTM1N0g5My41NzM4QzkzLjI0NzkgMjUuOTM1NyA5Mi45NjY3IDI1LjY1NiA5Mi45Njc3IDI1LjMzMjVMOTIuOTk5MyAxMy43NzI2QzkzLjAwMDMgMTMuNDQ5MSA5Mi43MjA0IDEzLjE2OTQgOTIuMzkzMiAxMy4xNjk0SDg5Ljg0MTFDODkuNTE1MiAxMy4xNjk0IDg5LjIzNTUgMTIuODkxMSA4OS4yMzUxIDEyLjU2NzZMODkuMjM4NCAxMC40MzQ1Qzg5LjIzODUgMTAuMTQ5MiA4OS40NTg2IDkuOTMxNjQgODkuNzQ2MiA5LjkzMTY0SDEwMC4yOTFDMTAwLjYxNyA5LjkzMTY0IDEwMC44OTYgMTAuMjA5OSAxMDAuODk3IDEwLjUzMzRMMTAwLjg5MyAxMi42NjY1QzEwMC44OTMgMTIuOTUxOCAxMDAuNjczIDEzLjE2OTQgMTAwLjM4NSAxMy4xNjk0SDEwMC4zODhaIiBmaWxsPSIjMTExNDFCIi8+CjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMF82NzBfMzY0OSkiPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTI0LjYyMjEgOS44NDYzOEMyNC44Mzk3IDkuODQ2MzggMjUuMDIxMiAxMC4wMzk5IDI1LjAwMjkgMTAuMjUzNEMyNC44MzcxIDEyLjEyMjUgMjQuMTU0OCAxOS44MTc5IDI0LjExMzYgMjAuMjg0NUMyMy45NjY0IDIxLjk0MjkgMjMuNTAyMiAyMy41MjA0IDIyLjc4MzQgMjQuOTY2N0MyMS4wNTA4IDI4LjQ2MTEgMTcuODIyNiAzMS4wMzk1IDE0LjA0MzEgMzIuMTIyNUMxNC4wMTA1IDMyLjEzMTggMTMuOTc3NSAzMi4xMzU3IDEzLjk0NTUgMzIuMTM1N0MxMy43MzU4IDMyLjEzNTcgMTMuNTQzIDMxLjk1MDEgMTMuNTYzNCAzMS43Mjg4TDEzLjk0NDggMjcuNDI3MUMxMy45NjYgMjcuMjAwNCAxNC4xMDE2IDI3LjAxNDggMTQuMzAwOSAyNi45MTQxQzE2LjM2MTggMjUuODczNSAxOC4wNjQ1IDIzLjgwOTQgMTcuODM4MSAyMS4yNzA4QzE3LjgyNDkgMjEuMTIyNCAxNy44MDc2IDIwLjk3MjYgMTcuNzgwOSAyMC44MjI4TDE2LjAxODUgMjAuODIyOEMxNi4wMTg0IDIwLjgyMzIgMTYuMDE4NCAyMC44MjM2IDE2LjAxODMgMjAuODI0TDE0LjQ0ODEgMjAuODI0QzEzLjE0MjMgMjAuODI0IDEyLjA0ODcgMTkuNjU0OCAxMi4xNjA1IDE4LjM3ODJMMTIuMzAzNCAxNi43NDYzTDEyLjM0NjIgMTYuMjgzN0wxMi40NDM2IDE1LjE3NTRMMTIuNDk5NyAxNC41NDU3QzEyLjUwMzUgMTQuNDk5MyAxMi41MDg3IDE0LjQ1MjkgMTIuNTEzOSAxNC40MDY1TDEyLjUxNTMgMTQuNDA2NUMxMi42NDUzIDEzLjMwMzYgMTMuMTQ2MSAxMi4zMDE1IDEzLjg4NjYgMTEuNTE4QzE0LjMxNzcgMTEuMDUxNCAxNC44MzUgMTAuNjY4MyAxNS40MDY0IDEwLjM4MzJDMTYuMDI2MyAxMC4wNzMxIDE3LjEzNyA5Ljg0NjM4IDE3Ljg1NTMgOS44NDYzOEwyNC42MjIxIDkuODQ2MzhaIiBmaWxsPSIjRkY2OTFEIi8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMy45NTQxMSAyNS44NDg5QzMuNzM2NDcgMjUuODQ4OSAzLjU1NDk1IDI1LjY1NTQgMy41NzMzIDI1LjQ0MTlDMy43MzkwOCAyMy41NzI4IDQuNDIxMzggMTUuODc3NCA0LjQ2MjU0IDE1LjQxMDhDNC42MDk3MyAxMy43NTI0IDUuMDczOTUgMTIuMTc0OSA1Ljc5MjgxIDEwLjcyODZDNy41MjUzOCA3LjIzNDIzIDEwLjc1MzYgNC42NTU4NSAxNC41MzMxIDMuNTcyOEMxNC41NjU2IDMuNTYzNTIgMTQuNTk4NyAzLjU1OTU3IDE0LjYzMDcgMy41NTk1N0MxNC44NDAzIDMuNTU5NTggMTUuMDMzMSAzLjc0NTE4IDE1LjAxMjggMy45NjY1NkwxNC42MzE0IDguMjY4MjVDMTQuNjEwMiA4LjQ5NDkyIDE0LjQ3NDUgOC42ODA0OCAxNC4yNzUyIDguNzgxMjNDMTIuMjE0NCA5LjgyMTg2IDEwLjUxMTYgMTEuODg1OSAxMC43MzggMTQuNDI0NUMxMC43NTEzIDE0LjU3MjkgMTAuNzY4NiAxNC43MjI3IDEwLjc5NTMgMTQuODcyNUwxMi41NTc3IDE0Ljg3MjVDMTIuNTU3NyAxNC44NzIxIDEyLjU1NzggMTQuODcxNyAxMi41NTc4IDE0Ljg3MTNIMTQuMTI4QzE1LjQzMzggMTQuODcxMyAxNi41Mjc1IDE2LjA0MDUgMTYuNDE1NyAxNy4zMTcxTDE2LjI3MjggMTguOTQ5TDE2LjIzIDE5LjQxMTZMMTYuMTMyNiAyMC41MTk5TDE2LjA3NjUgMjEuMTQ5NkMxNi4wNzI2IDIxLjE5NiAxNi4wNjc1IDIxLjI0MjQgMTYuMDYyMyAyMS4yODg4SDE2LjA2MDlDMTUuOTMwOSAyMi4zOTE3IDE1LjQzMDEgMjMuMzkzOCAxNC42ODk1IDI0LjE3NzNDMTQuMjU4NSAyNC42NDM5IDEzLjc0MTIgMjUuMDI3MSAxMy4xNjk4IDI1LjMxMjFDMTIuNTQ5OCAyNS42MjIzIDExLjQzOTIgMjUuODQ4OSAxMC43MjA4IDI1Ljg0ODlMMy45NTQxMSAyNS44NDg5WiIgZmlsbD0iIzcyMUFFQSIvPgo8cGF0aCBkPSJNMTQuMTM2MSAxNC44NTA2QzE1LjQ0MTkgMTQuODUwNiAxNi41MzU2IDE2LjAxOTkgMTYuNDIzOCAxNy4yOTY0TDE2LjI4MDkgMTguOTI4M0wxNi4yMzggMTkuMzkxTDE2LjExMzcgMjAuODAySDE2LjAyNjVDMTYuMDI2NCAyMC44MDI0IDE2LjAyNjQgMjAuODAyOCAxNi4wMjY0IDIwLjgwMzJIMTQuNDU2MkMxMy4xNTA0IDIwLjgwMzIgMTIuMDU2OCAxOS42MzQgMTIuMTY4NSAxOC4zNTc0TDEyLjMxMTUgMTYuNzI1NUwxMi4zNTQzIDE2LjI2MjlMMTIuNDUxNiAxNS4xNTQ2TDEyLjQ3ODUgMTQuODUxOEgxMi41NjU4QzEyLjU2NTkgMTQuODUxNCAxMi41NjU5IDE0Ljg1MSAxMi41NjU5IDE0Ljg1MDZIMTQuMTM2MVoiIGZpbGw9IiM0ODBFOTgiLz4KPC9nPgo8ZGVmcz4KPGNsaXBQYXRoIGlkPSJjbGlwMF82NzBfMzY0OSI+CjxyZWN0IHdpZHRoPSIyOC41NzYxIiBoZWlnaHQ9IjI4LjU3NjEiIGZpbGw9IndoaXRlIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDMuNTU5NTcpIi8+CjwvY2xpcFBhdGg+CjwvZGVmcz4KPC9zdmc+Cg==';
+
+// Placeholder result image (pink gradient SVG with character silhouettes) — swap with real image later
+const RESULT_IMG = 'data:image/svg+xml;base64,' + btoa(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffd8e7"/>
+      <stop offset="50%" stop-color="#ff9bc4"/>
+      <stop offset="100%" stop-color="#ff5d9e"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="450" fill="url(#g)"/>
+  <circle cx="200" cy="200" r="80" fill="#fff" opacity="0.4"/>
+  <circle cx="400" cy="250" r="100" fill="#fff" opacity="0.3"/>
+  <text x="300" y="240" font-family="system-ui,sans-serif" font-weight="700" font-size="38" fill="#fff" text-anchor="middle">Aesthetic</text>
+  <text x="300" y="280" font-family="system-ui,sans-serif" font-size="22" fill="#fff" text-anchor="middle" opacity="0.9">Result image placeholder</text>
+</svg>`);
+
+const $ = id => document.getElementById(id);
+const setStatus = msg => $('status').textContent = msg;
+
+function rebuildPreview(){
+  const r = MOCK;
+  document.documentElement.style.setProperty('--accent', r.accent);
+  document.documentElement.style.setProperty('--accent2', r.accent2);
+  $('brandLogo').src = SHOUT_LOGO;
+  $('rimg').src = RESULT_IMG;
+  $('rimg').alt = r.title;
+  $('remoji').textContent = r.emoji;
+  $('rtitle').textContent = r.title;
+  $('rtag').textContent = '#' + r.tag.toUpperCase();
+  $('rlead').textContent = r.lead;
+  $('rquote').textContent = r.quote;
+  $('rweak').textContent = r.weak;
+  $('rfit').textContent = r.fit;
+  $('rfoot').textContent = r.foot;
+  // QR code
+  const box = $('qrcode'); box.innerHTML = '';
+  try{
+    new QRCode(box, {text:'https://line.me/R/ti/p/@shouter', width:88, height:88,
+      colorDark:'#1e1f3b', colorLight:'#ffffff', correctLevel: QRCode.CorrectLevel.H});
+  }catch(e){ box.innerHTML = '<div style="font-size:11px;color:#333">QR fail</div>'; }
+  setStatus('preview พร้อม');
+}
+
+function waitForImage(img){
+  return new Promise(res=>{
+    if(img.complete && img.naturalWidth) return res();
+    img.addEventListener('load', ()=>res(), {once:true});
+    img.addEventListener('error', ()=>res(), {once:true});
+    setTimeout(res, 2000);
+  });
+}
+
+async function runExport(){
+  const btn = $('exportBtn'); btn.disabled = true;
+  const t0 = performance.now();
+  setStatus('กำลัง render…');
+  try{
+    if(document.fonts && document.fonts.ready){
+      try{ await Promise.race([document.fonts.ready, new Promise(r=>setTimeout(r,2000))]); }catch(e){}
+    }
+    await waitForImage($('rimg'));
+    await waitForImage($('brandLogo'));
+
+    const canvas = await html2canvas($('rcard'), {
+      scale: 2,
+      backgroundColor: '#ffffff',
+      useCORS: true,
+      logging: false
+    });
+
+    const dataUrl = canvas.toDataURL('image/png');
+    const blob = await new Promise(r => canvas.toBlob(r, 'image/png', 0.95));
+    const elapsed = Math.round(performance.now() - t0);
+
+    $('outWrap').innerHTML = '';
+    const img = document.createElement('img');
+    img.className = 'out-img';
+    img.src = dataUrl;
+    $('outWrap').appendChild(img);
+
+    const a = document.createElement('a');
+    a.className = 'btn btn-ghost';
+    a.style.marginTop = '10px';
+    a.style.display = 'inline-block';
+    a.style.textDecoration = 'none';
+    a.download = 'shout-quiz-export-test.png';
+    a.href = dataUrl;
+    a.textContent = '💾 Download this PNG';
+    $('outWrap').appendChild(a);
+
+    $('outMeta').innerHTML = `dimensions: <b>${canvas.width}×${canvas.height}px</b> · file size: <b>${Math.round(blob.size/1024)} KB</b> · render time: <b>${elapsed} ms</b>`;
+    setStatus('export สำเร็จ ✓');
+  }catch(e){
+    setStatus('export พลาด: ' + e.message);
+    $('outWrap').innerHTML = `<div class="placeholder">Error: ${e.message}</div>`;
+  }
+  btn.disabled = false;
+}
+
+rebuildPreview();
+</script>
+</body>
+</html>

@@ -108,42 +108,43 @@
 
   /* ---------- RESULT ---------- */
   .result{text-align:center}
-  .rlabel{font-weight:600;color:var(--orange);font-size:15px;letter-spacing:.5px;margin-bottom:10px}
-  .rcard{position:relative;border-radius:26px;padding:26px 22px 26px;margin-top:4px;background:var(--card);
+  .rlabel{font-weight:600;color:var(--orange);font-size:14px;letter-spacing:.5px;margin-bottom:8px}
+  .rcard{position:relative;border-radius:24px;padding:22px 20px;margin-top:4px;background:var(--card);
     border:1px solid #eceaf6;box-shadow:0 20px 50px rgba(114,26,234,.13)}
-  .rimgwrap{position:relative;margin-bottom:30px;animation:pop .5s cubic-bezier(.3,1.4,.5,1) both}
-  .rimg{width:100%;display:block;border-radius:18px;border:3px solid var(--accent);background:#fff;box-shadow:0 12px 30px rgba(0,0,0,.12)}
-  .remoji{position:absolute;right:-4px;bottom:-22px;font-size:40px;line-height:1;width:68px;height:68px;border-radius:50%;
+  .rbrand{display:flex;justify-content:center;align-items:center;gap:8px;margin-bottom:6px}
+  .rbrand img{height:26px;width:auto;display:block}
+  .rimgwrap{position:relative;margin:8px auto 22px;max-width:280px;animation:pop .5s cubic-bezier(.3,1.4,.5,1) both}
+  .rimg{width:100%;display:block;border-radius:16px;border:3px solid var(--accent);background:#fff;box-shadow:0 10px 24px rgba(0,0,0,.12);aspect-ratio:4/3;object-fit:cover}
+  .remoji{position:absolute;right:-6px;bottom:-16px;font-size:28px;line-height:1;width:54px;height:54px;border-radius:50%;
     background:#fff;border:3px solid var(--accent);display:grid;place-items:center;
-    box-shadow:0 8px 18px rgba(0,0,0,.14);animation:pop .55s .12s cubic-bezier(.3,1.6,.5,1) both}
+    box-shadow:0 6px 14px rgba(0,0,0,.14);animation:pop .55s .12s cubic-bezier(.3,1.6,.5,1) both}
   @keyframes pop{from{transform:scale(0) rotate(-18deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
   .capture-ready,.capture-ready *{animation:none!important;transition:none!important}
   .capture-ready .rimgwrap,.capture-ready .remoji{transform:none!important;opacity:1!important}
-  .rtitle{font-weight:700;font-size:clamp(26px,6.5vw,34px);margin:8px 0 2px;color:var(--ink);line-height:1.2}
-  .rtag{font-size:13px;color:var(--accent);font-weight:600;letter-spacing:1px;text-transform:uppercase}
-  .rlead{font-size:16px;line-height:1.7;color:var(--muted);margin:16px 4px 6px;white-space:pre-line}
-  .rgrid{display:flex;flex-direction:column;gap:10px;margin-top:16px;text-align:left}
-  .rrow{background:var(--bg);border-radius:15px;padding:14px 16px;border:1px solid #ecebf6}
-  .rrow .h{font-weight:600;font-size:14px;color:var(--accent);margin-bottom:2px}
-  .rrow .v{font-size:15px;line-height:1.55;color:var(--ink);white-space:pre-line}
-  .rfoot{font-size:15.5px;line-height:1.6;color:var(--ink);margin-top:18px;font-weight:500;white-space:pre-line}
+  .rtitle{text-align:center;font-weight:700;font-size:clamp(22px,5.5vw,28px);margin:6px 0 2px;color:var(--ink);line-height:1.2}
+  .rtag{text-align:center;font-size:12px;color:var(--accent);font-weight:600;letter-spacing:1px;text-transform:uppercase}
+  .rlead{font-size:13.5px;line-height:1.55;color:var(--muted);margin:12px 4px 4px;white-space:pre-line;text-align:center}
+  .rgrid{display:flex;flex-direction:column;gap:8px;margin-top:12px;text-align:left}
+  .rrow{background:var(--bg);border-radius:12px;padding:10px 13px;border:1px solid #ecebf6}
+  .rrow .h{font-weight:600;font-size:12px;color:var(--accent);margin-bottom:2px}
+  .rrow .v{font-size:13px;line-height:1.45;color:var(--ink);white-space:pre-line}
+  .rfoot{font-size:13px;line-height:1.5;color:var(--ink);margin-top:14px;font-weight:500;white-space:pre-line;text-align:center;padding:0 6px}
 
-  /* SHOUT footer */
-  .shout-box{margin-top:24px;border-radius:24px;padding:28px 22px;text-align:center;
+  /* SHOUT footer — lives inside .rcard so it's captured in the export */
+  .shout-box{margin-top:18px;border-radius:18px;padding:18px 16px;text-align:center;
     background:linear-gradient(135deg,#7a23ee 0%,#9b4bff 45%,#ff7a3a 115%);
-    box-shadow:0 18px 40px rgba(114,26,234,.28)}
-  .sb-logochip{display:inline-flex;background:#fff;padding:11px 20px;border-radius:14px;box-shadow:0 8px 20px rgba(0,0,0,.16)}
-  .sb-logochip img{height:39px;width:auto;display:block}
-  .sb-sub{font-size:14.5px;line-height:1.6;margin:16px auto 18px;color:#fff;max-width:380px;font-weight:400}
+    color:#fff;box-shadow:0 12px 28px rgba(114,26,234,.22)}
+  .sb-row{display:flex;align-items:center;gap:14px;justify-content:center;flex-wrap:wrap}
+  .sb-text{flex:1;min-width:140px;text-align:left}
+  .sb-sub{font-size:12.5px;line-height:1.45;color:#fff;font-weight:400;margin-bottom:6px}
   .sb-sub b{font-weight:600}
-  .qrwrap{background:#fff;border-radius:16px;padding:13px;display:inline-block;box-shadow:0 8px 22px rgba(0,0,0,.18)}
+  .qrwrap{background:#fff;border-radius:10px;padding:7px;display:inline-block;box-shadow:0 4px 12px rgba(0,0,0,.18)}
   #qrcode{display:flex;justify-content:center}
-  #qrcode img,#qrcode canvas{display:block;border-radius:6px}
-  .line-id{margin-top:12px;font-size:13.5px;color:#fff;font-weight:500;opacity:.92}
-  .line-btn{display:inline-flex;align-items:center;gap:9px;margin-top:9px;text-decoration:none;font-weight:600;font-size:17px;
-    color:#fff;background:var(--line);padding:13px 26px;border-radius:999px;transition:transform .16s,box-shadow .16s;box-shadow:0 8px 20px rgba(6,199,85,.4)}
-  .line-btn:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(6,199,85,.5)}
-  .line-btn .lico{width:24px;height:24px;border-radius:7px;background:#fff;color:var(--line);display:grid;place-items:center;font-weight:700;font-size:13px}
+  #qrcode img,#qrcode canvas{display:block;border-radius:4px}
+  .line-btn{display:inline-flex;align-items:center;gap:7px;text-decoration:none;font-weight:600;font-size:13px;
+    color:#fff;background:var(--line);padding:8px 16px;border-radius:999px;transition:transform .16s,box-shadow .16s;box-shadow:0 5px 14px rgba(6,199,85,.4)}
+  .line-btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(6,199,85,.5)}
+  .line-btn .lico{width:18px;height:18px;border-radius:5px;background:#fff;color:var(--line);display:grid;place-items:center;font-weight:700;font-size:11px}
 
   .actions{display:flex;gap:12px;margin-top:22px;justify-content:center;flex-wrap:wrap}
   .btn-ghost{font-family:inherit;font-weight:600;font-size:16px;cursor:pointer;background:#fff;color:var(--purple);
@@ -206,6 +207,7 @@
       <div class="result">
         <div class="rlabel">🎉 ผลลัพธ์ของคุณคือ</div>
         <div class="rcard" id="rcard">
+          <div class="rbrand"><img id="rbrandLogo" alt="SHOUT!"><span class="pill">QUIZ</span></div>
           <div class="rimgwrap"><img class="rimg" id="rimg" alt="" loading="lazy"><div class="remoji" id="remoji"></div></div>
           <div class="rtitle" id="rtitle"></div>
           <div class="rtag" id="rtag"></div>
@@ -216,16 +218,17 @@
             <div class="rrow"><div class="h">🎯 เหมาะกับ</div><div class="v" id="rfit"></div></div>
           </div>
           <div class="rfoot" id="rfoot"></div>
-        </div>
-
-        <div class="shout-box">
-          <div class="sb-logochip"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTEyIiBoZWlnaHQ9IjM2IiB2aWV3Qm94PSIwIDAgMTEyIDM2IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNMTA1LjA3IDIxLjMxMkMxMDYuMzM4IDIxLjMxMiAxMDcuMzY3IDIyLjM0MTUgMTA3LjM2NyAyMy42MTE0QzEwNy4zNjcgMjQuODgxMyAxMDYuMzM4IDI1LjkxMDggMTA1LjA3IDI1LjkxMDhDMTAzLjgwMSAyNS45MTA3IDEwMi43NzMgMjQuODgxMyAxMDIuNzczIDIzLjYxMTRDMTAyLjc3MyAyMi4zNDE1IDEwMy44MDEgMjEuMzEyIDEwNS4wNyAyMS4zMTJaIiBmaWxsPSIjMTExNDFCIi8+CjxwYXRoIGQ9Ik0xMDUuMTU5IDkuOTc0NjFDMTA2LjM4NCA5Ljk3NDYxIDEwNy4yNSAxMC45NTA5IDEwNy4zNTUgMTIuMTI3OUMxMDcuNDg1IDEzLjU5MjIgMTA2LjU1MyAxOC4xNDI5IDEwNS44NjkgMjAuNDczMkgxMDQuMzMyQzEwMy43MDMgMTguMTQyOSAxMDMuMTIgMTQuNTkwNyAxMDIuOTQxIDEyLjU3MTRDMTAyLjgwOSAxMS4wODQ4IDEwMy45MzQgOS45NzQ2MSAxMDUuMTU5IDkuOTc0NjFaIiBmaWxsPSIjMTExNDFCIi8+CjxwYXRoIGQ9Ik00MC40MTk1IDEzLjI0MjJDNDAuMzc1MiAxMy41NjM5IDQwLjA1NTMgMTMuNzU0NiAzOS43MzMxIDEzLjY0NjRDMzguNjE4IDEzLjI3MzUgMzcuNDYxNiAxMi45OTc0IDM2LjQ0MjUgMTIuOTk3NEMzNS42MDE4IDEyLjk5NzQgMzQuODU4NSAxMy40MDU5IDM0LjkxNjggMTQuMDYyQzM0Ljk4MTEgMTQuNzg2NCAzNS41NjY3IDE1LjI0MDUgMzcuNTI3OSAxNi4zNDkyQzM5LjcwMzQgMTcuNTczMiA0MS4wNjE2IDE5LjA0NDggNDEuMjEwNSAyMC43MjE0QzQxLjQ4OCAyMy44NDY5IDM4Ljk5NDYgMjUuOTU0NyAzNS4yMDA2IDI1Ljk1NDdDMzMuNjA5MSAyNS45NTQ3IDMxLjk3NzYgMjUuNTA1IDMwLjczODQgMjQuODQzMkMzMC41MjEyIDI0LjcyNzkgMzAuMzk5NyAyNC40ODQ1IDMwLjQyNjIgMjQuMjUyNUwzMC42ODAzIDIyLjA2NjRDMzAuNzIzNSAyMS43MDA2IDMxLjExMDggMjEuNTE0MiAzMS40NTc1IDIxLjY4OTJDMzIuNjA2NSAyMi4yNjcxIDMzLjk5MzcgMjIuNzE1NCAzNS4yMzEzIDIyLjcxNTRDMzYuMTE3NyAyMi43MTU0IDM2Ljg0MzYgMjIuMTk0NSAzNi43NzEyIDIxLjM3OUMzNi43MDI4IDIwLjYwOSAzNi4wNjU3IDIwLjA4ODEgMzQuMDgzNSAxOS4wMDA3QzMyLjAwNCAxNy44NDUgMzAuNzI3NyAxNi41MDg2IDMwLjU2NDggMTQuNjc0QzMwLjMxMzMgMTEuODQxNyAzMi44MDc1IDkuOTE3NDggMzYuMDc3NiA5LjkxNzQ4QzM3LjY0OTIgOS45MTc0OCAzOS4wOTMxIDEwLjI2NDggNDAuMjY1MyAxMC42NzA0QzQwLjU0MjEgMTAuNzY1NyA0MC43MjI0IDExLjA0MzMgNDAuNjg0MSAxMS4zMTk0TDQwLjQxOTYgMTMuMjQzNkw0MC40MTk1IDEzLjI0MjJaIiBmaWxsPSIjMTExNDFCIi8+CjxwYXRoIGQ9Ik01NS4zMDkzIDI1Ljk0ODJINTIuMjI5NEM1MS45MDM2IDI1Ljk0ODIgNTEuNjIyMyAyNS42Njg1IDUxLjYyNDcgMjUuMzQ1TDUxLjY0MDggMjAuMDM4OUM1MS42NDE4IDE5LjcxNTQgNTEuNjQ3NyAxOS40MzU3IDUxLjMyMTkgMTkuNDM1N0g0Ny43OTc3QzQ3LjUxMTUgMTkuNDM1NyA0Ny4yOTE0IDE5LjY1MzIgNDcuMjkxMSAxOS45MzcyTDQ3LjI3MzIgMjUuNDQ1M0M0Ny4yNzE1IDI1LjcyOTIgNDcuMDUyOCAyNS45NDY4IDQ2Ljc2NTIgMjUuOTQ2OEg0My42ODM4QzQzLjM1OCAyNS45NDY4IDQzLjA3ODMgMjUuNjY4NSA0My4wNzc5IDI1LjM0NUw0My4wOTUgMTAuNDc4OUM0My4wOTUxIDEwLjE5MzYgNDMuMzE1MyA5Ljk3NjAyIDQzLjYwMjggOS45NzYwMkg0Ni42ODI4QzQ3LjAwODYgOS45NzYwMiA0Ny4yODk5IDEwLjI1NTcgNDcuMjg3NCAxMC41NzkyTDQ3LjI3MjcgMTUuNTQ5NUM0Ny4yNzE3IDE1Ljg3MyA0Ny41NTE1IDE2LjE1MjcgNDcuODc4OCAxNi4xNTI3SDUxLjQwM0M1MS42ODkyIDE2LjE1MjcgNTEuNjIzNSAxNS45MzUyIDUxLjYyNTEgMTUuNjQ5OEw1MS42NDAzIDEwLjQ3NzVDNTEuNjQyIDEwLjE5MzYgNTEuODYwNiA5Ljk3NDYxIDUyLjE0ODIgOS45NzQ2MUg1NS4yMjk1QzU1LjU1NTQgOS45NzQ2MSA1NS44MzUxIDEwLjI1MjkgNTUuODM1NSAxMC41NzY0TDU1LjgxODQgMjUuNDQyNUM1NS44MTgyIDI1LjcyNzggNTUuNTk4MSAyNS45NDU0IDU1LjMxMDUgMjUuOTQ1NEw1NS4zMDkzIDI1Ljk0ODJaIiBmaWxsPSIjMTExNDFCIi8+CjxwYXRoIGQ9Ik02NS4wNzQ1IDI1Ljk2NDhDNjAuNjc3MSAyNS45NjQ4IDU4LjA1OTIgMjIuNjUxOSA1Ny43Mjc4IDE4LjkxOTdDNTcuMzEwNiAxNC4yMjEzIDU5LjczODMgOS45MDQzIDY1LjUwOTkgOS45MDQzQzY5LjU5OSA5LjkwNDMgNzIuMzU5NyAxMy4wNzQyIDcyLjY5MTEgMTYuODA2NEM3My4xMDg0IDIxLjUwNjIgNzAuNTM3OCAyNS45NjQ4IDY1LjA3NDUgMjUuOTY0OFpNNjUuMTg4MSAxMy4xNDA2QzYzLjEzNjcgMTMuMTQwNiA2MS45MDE2IDE1LjQxMDcgNjIuMTY5MSAxOC40MjM5QzYyLjQxMjcgMjEuMTY3MiA2My43MjU4IDIyLjcyNTcgNjUuMzk0NyAyMi43MjU3QzY3LjE2MDMgMjIuNzI1NyA2OC41MTU3IDIwLjMxMjUgNjguMjQ4MiAxNy4yOTk0QzY4LjAwNDYgMTQuNTU2MSA2Ni44MzQyIDEzLjEzOTIgNjUuMTg4IDEzLjEzOTJMNjUuMTg4MSAxMy4xNDA2WiIgZmlsbD0iIzExMTQxQiIvPgo8cGF0aCBkPSJNODcuMzg3MSAyMC4xMzI5Qzg3LjM3NjYgMjMuNTcyNyA4NS40MjY3IDI1Ljk2NDYgODAuOTkyMiAyNS45NjQ2Qzc3LjY5OTcgMjUuOTY0NiA3NC45MTE3IDI0LjI5MzEgNzQuNjI0MiAyMS4wNTU0Qzc0LjYwMDIgMjAuNzg1NiA3NC41NzQzIDIwLjQ5MzIgNzQuNTgzIDIwLjMzNjRMNzQuNTg2NCAxMC40MzU5Qzc0LjU4NjYgMTAuMTUwNiA3NC44MDY2IDkuOTMxNjQgNzUuMDk0MiA5LjkzMTY0SDc3Ljg4OThDNzguMjE1NiA5LjkzMTY0IDc4LjQ5NTMgMTAuMjA5OSA3OC40OTU3IDEwLjUzMzRMNzguNDk2MiAxOS42MTU5Qzc4LjQ5MTUgMTkuODE3OSA3OC40NzgxIDIwLjE3ODEgNzguNDkgMjAuMzEyM0M3OC42MTU4IDIxLjcyOTIgNzkuOTMxNiAyMi40OTM0IDgxLjEyNTkgMjIuNDkzNEM4Mi4yNjExIDIyLjQ5MzQgODMuNDYwNCAyMS43MDY2IDgzLjQ2NzMgMTkuOTk3M0w4My40NzggMTAuNDM0NUM4My40NzgyIDEwLjE0OTIgODMuNjk4MyA5LjkzMTY0IDgzLjk4NTkgOS45MzE2NEg4Ni43ODE1Qzg3LjEwNzMgOS45MzE2NCA4Ny4zODcgMTAuMjA5OSA4Ny4zODc0IDEwLjUzMzRMODcuMzg4NSAyMC4xMzI5SDg3LjM4NzFaIiBmaWxsPSIjMTExNDFCIi8+CjxwYXRoIGQ9Ik0xMDAuMzg4IDEzLjE2OTRIOTcuODAyQzk3LjUxNDQgMTMuMTY5NCA5Ny4xNTE1IDEzLjM4ODMgOTcuMTUxNCAxMy42NzM3TDk3LjE1NjQgMTkuNDgxTDk3LjE2MTUgMjUuNDMxNEM5Ny4xNjEzIDI1LjcxNjcgOTYuOTQxMyAyNS45MzU3IDk2LjY1MzcgMjUuOTM1N0g5My41NzM4QzkzLjI0NzkgMjUuOTM1NyA5Mi45NjY3IDI1LjY1NiA5Mi45Njc3IDI1LjMzMjVMOTIuOTk5MyAxMy43NzI2QzkzLjAwMDMgMTMuNDQ5MSA5Mi43MjA0IDEzLjE2OTQgOTIuMzkzMiAxMy4xNjk0SDg5Ljg0MTFDODkuNTE1MiAxMy4xNjk0IDg5LjIzNTUgMTIuODkxMSA4OS4yMzUxIDEyLjU2NzZMODkuMjM4NCAxMC40MzQ1Qzg5LjIzODUgMTAuMTQ5MiA4OS40NTg2IDkuOTMxNjQgODkuNzQ2MiA5LjkzMTY0SDEwMC4yOTFDMTAwLjYxNyA5LjkzMTY0IDEwMC44OTYgMTAuMjA5OSAxMDAuODk3IDEwLjUzMzRMMTAwLjg5MyAxMi42NjY1QzEwMC44OTMgMTIuOTUxOCAxMDAuNjczIDEzLjE2OTQgMTAwLjM4NSAxMy4xNjk0SDEwMC4zODhaIiBmaWxsPSIjMTExNDFCIi8+CjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMF82NzBfMzY0OSkiPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTI0LjYyMjEgOS44NDYzOEMyNC44Mzk3IDkuODQ2MzggMjUuMDIxMiAxMC4wMzk5IDI1LjAwMjkgMTAuMjUzNEMyNC44MzcxIDEyLjEyMjUgMjQuMTU0OCAxOS44MTc5IDI0LjExMzYgMjAuMjg0NUMyMy45NjY0IDIxLjk0MjkgMjMuNTAyMiAyMy41MjA0IDIyLjc4MzQgMjQuOTY2N0MyMS4wNTA4IDI4LjQ2MTEgMTcuODIyNiAzMS4wMzk1IDE0LjA0MzEgMzIuMTIyNUMxNC4wMTA1IDMyLjEzMTggMTMuOTc3NSAzMi4xMzU3IDEzLjk0NTUgMzIuMTM1N0MxMy43MzU4IDMyLjEzNTcgMTMuNTQzIDMxLjk1MDEgMTMuNTYzNCAzMS43Mjg4TDEzLjk0NDggMjcuNDI3MUMxMy45NjYgMjcuMjAwNCAxNC4xMDE2IDI3LjAxNDggMTQuMzAwOSAyNi45MTQxQzE2LjM2MTggMjUuODczNSAxOC4wNjQ1IDIzLjgwOTQgMTcuODM4MSAyMS4yNzA4QzE3LjgyNDkgMjEuMTIyNCAxNy44MDc2IDIwLjk3MjYgMTcuNzgwOSAyMC44MjI4TDE2LjAxODUgMjAuODIyOEMxNi4wMTg0IDIwLjgyMzIgMTYuMDE4NCAyMC44MjM2IDE2LjAxODMgMjAuODI0TDE0LjQ0ODEgMjAuODI0QzEzLjE0MjMgMjAuODI0IDEyLjA0ODcgMTkuNjU0OCAxMi4xNjA1IDE4LjM3ODJMMTIuMzAzNCAxNi43NDYzTDEyLjM0NjIgMTYuMjgzN0wxMi40NDM2IDE1LjE3NTRMMTIuNDk5NyAxNC41NDU3QzEyLjUwMzUgMTQuNDk5MyAxMi41MDg3IDE0LjQ1MjkgMTIuNTEzOSAxNC40MDY1TDEyLjUxNTMgMTQuNDA2NUMxMi42NDUzIDEzLjMwMzYgMTMuMTQ2MSAxMi4zMDE1IDEzLjg4NjYgMTEuNTE4QzE0LjMxNzcgMTEuMDUxNCAxNC44MzUgMTAuNjY4MyAxNS40MDY0IDEwLjM4MzJDMTYuMDI2MyAxMC4wNzMxIDE3LjEzNyA5Ljg0NjM4IDE3Ljg1NTMgOS44NDYzOEwyNC42MjIxIDkuODQ2MzhaIiBmaWxsPSIjRkY2OTFEIi8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMy45NTQxMSAyNS44NDg5QzMuNzM2NDcgMjUuODQ4OSAzLjU1NDk1IDI1LjY1NTQgMy41NzMzIDI1LjQ0MTlDMy43MzkwOCAyMy41NzI4IDQuNDIxMzggMTUuODc3NCA0LjQ2MjU0IDE1LjQxMDhDNC42MDk3MyAxMy43NTI0IDUuMDczOTUgMTIuMTc0OSA1Ljc5MjgxIDEwLjcyODZDNy41MjUzOCA3LjIzNDIzIDEwLjc1MzYgNC42NTU4NSAxNC41MzMxIDMuNTcyOEMxNC41NjU2IDMuNTYzNTIgMTQuNTk4NyAzLjU1OTU3IDE0LjYzMDcgMy41NTk1N0MxNC44NDAzIDMuNTU5NTggMTUuMDMzMSAzLjc0NTE4IDE1LjAxMjggMy45NjY1NkwxNC42MzE0IDguMjY4MjVDMTQuNjEwMiA4LjQ5NDkyIDE0LjQ3NDUgOC42ODA0OCAxNC4yNzUyIDguNzgxMjNDMTIuMjE0NCA5LjgyMTg2IDEwLjUxMTYgMTEuODg1OSAxMC43MzggMTQuNDI0NUMxMC43NTEzIDE0LjU3MjkgMTAuNzY4NiAxNC43MjI3IDEwLjc5NTMgMTQuODcyNUwxMi41NTc3IDE0Ljg3MjVDMTIuNTU3NyAxNC44NzIxIDEyLjU1NzggMTQuODcxNyAxMi41NTc4IDE0Ljg3MTNIMTQuMTI4QzE1LjQzMzggMTQuODcxMyAxNi41Mjc1IDE2LjA0MDUgMTYuNDE1NyAxNy4zMTcxTDE2LjI3MjggMTguOTQ5TDE2LjIzIDE5LjQxMTZMMTYuMTMyNiAyMC41MTk5TDE2LjA3NjUgMjEuMTQ5NkMxNi4wNzI2IDIxLjE5NiAxNi4wNjc1IDIxLjI0MjQgMTYuMDYyMyAyMS4yODg4SDE2LjA2MDlDMTUuOTMwOSAyMi4zOTE3IDE1LjQzMDEgMjMuMzkzOCAxNC42ODk1IDI0LjE3NzNDMTQuMjU4NSAyNC42NDM5IDEzLjc0MTIgMjUuMDI3MSAxMy4xNjk4IDI1LjMxMjFDMTIuNTQ5OCAyNS42MjIzIDExLjQzOTIgMjUuODQ4OSAxMC43MjA4IDI1Ljg0ODlMMy45NTQxMSAyNS44NDg5WiIgZmlsbD0iIzcyMUFFQSIvPgo8cGF0aCBkPSJNMTQuMTM2MSAxNC44NTA2QzE1LjQ0MTkgMTQuODUwNiAxNi41MzU2IDE2LjAxOTkgMTYuNDIzOCAxNy4yOTY0TDE2LjI4MDkgMTguOTI4M0wxNi4yMzggMTkuMzkxTDE2LjExMzcgMjAuODAySDE2LjAyNjVDMTYuMDI2NCAyMC44MDI0IDE2LjAyNjQgMjAuODAyOCAxNi4wMjY0IDIwLjgwMzJIMTQuNDU2MkMxMy4xNTA0IDIwLjgwMzIgMTIuMDU2OCAxOS42MzQgMTIuMTY4NSAxOC4zNTc0TDEyLjMxMTUgMTYuNzI1NUwxMi4zNTQzIDE2LjI2MjlMMTIuNDUxNiAxNS4xNTQ2TDEyLjQ3ODUgMTQuODUxOEgxMi41NjU4QzEyLjU2NTkgMTQuODUxNCAxMi41NjU5IDE0Ljg1MSAxMi41NjU5IDE0Ljg1MDZIMTQuMTM2MVoiIGZpbGw9IiM0ODBFOTgiLz4KPC9nPgo8ZGVmcz4KPGNsaXBQYXRoIGlkPSJjbGlwMF82NzBfMzY0OSI+CjxyZWN0IHdpZHRoPSIyOC41NzYxIiBoZWlnaHQ9IjI4LjU3NjEiIGZpbGw9IndoaXRlIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDMuNTU5NTcpIi8+CjwvY2xpcFBhdGg+CjwvZGVmcz4KPC9zdmc+Cg==" alt="SHOUT!"></div>
-          <div class="sb-sub">แพลตฟอร์มอินฟลูเอนเซอร์ ร่วมงานกับ <b>แบรนด์และเอเจนซี่ชั้นนำกว่า 6,000+</b><br>อยากเป็นอินฟลูตัวจริง สมัครเลย!</div>
-          <div class="qrwrap"><div id="qrcode"></div></div>
-          <div class="line-id">เพิ่มเพื่อนทาง LINE</div>
-          <a class="line-btn" id="lineBtn" href="https://line.me/R/ti/p/@shouter" target="_blank" rel="noopener">
-            <span class="lico">L</span> @shouter
-          </a>
+          <div class="shout-box">
+            <div class="sb-row">
+              <div class="qrwrap"><div id="qrcode"></div></div>
+              <div class="sb-text">
+                <div class="sb-sub">อยากเป็นอินฟลูตัวจริง?<br>ร่วมงานกับแบรนด์ <b>6,000+</b> ผ่าน SHOUT!</div>
+                <a class="line-btn" id="lineBtn" href="https://line.me/R/ti/p/@shouter" target="_blank" rel="noopener">
+                  <span class="lico">L</span> @shouter
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="actions">
@@ -318,8 +321,11 @@ function showResult(){
 }
 function buildQR(){
   const box=$("qrcode"); box.innerHTML="";
-  try{ new QRCode(box,{text:LINE_URL,width:148,height:148,colorDark:"#1e1f3b",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.H}); }
-  catch(e){ box.innerHTML='<div style="color:#1e1f3b;font-weight:600">LINE: @shouter</div>'; }
+  try{ new QRCode(box,{text:LINE_URL,width:88,height:88,colorDark:"#1e1f3b",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.H}); }
+  catch(e){ box.innerHTML='<div style="color:#1e1f3b;font-weight:600;font-size:11px">LINE: @shouter</div>'; }
+  const logo=document.querySelector(".brandbar img");
+  const rlogo=$("rbrandLogo");
+  if(logo && rlogo && !rlogo.src) rlogo.src=logo.src;
 }
 function fireConfetti(c1,c2){
   const cols=[c1,c2,"#721aea","#ff691d","#9b4bff"];
