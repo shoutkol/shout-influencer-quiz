@@ -109,10 +109,10 @@
   /* ---------- RESULT ---------- */
   .result{text-align:center}
   .rlabel{font-weight:600;color:var(--orange);font-size:14px;letter-spacing:.5px;margin-bottom:8px}
-  .rcard{position:relative;border-radius:24px;padding:22px 20px;margin-top:4px;background:var(--card);
+  .rcard{position:relative;border-radius:24px;padding:12px 20px 22px;margin-top:4px;background:var(--card);
     border:1px solid #eceaf6;box-shadow:0 20px 50px rgba(114,26,234,.13)}
   .rbrand{text-align:center;margin-bottom:6px;line-height:1}
-  .rbrand img{height:26px;width:auto;display:inline-block;vertical-align:middle}
+  .rbrand img{height:38px;width:auto;display:inline-block;vertical-align:middle}
   .rbrand .pill{margin-left:8px;vertical-align:middle;display:inline-block}
   .rimgwrap{position:relative;margin:8px auto 22px;max-width:224px;animation:pop .5s cubic-bezier(.3,1.4,.5,1) both}
   .rimg{width:100%;height:auto;display:block;border-radius:16px;border:3px solid var(--accent);background:#fff;box-shadow:0 10px 24px rgba(0,0,0,.12)}
@@ -206,7 +206,6 @@
     <!-- RESULT -->
     <section class="screen hidden" id="resultScreen">
       <div class="result">
-        <div class="rlabel">🎉 ผลลัพธ์ของคุณคือ</div>
         <div class="rcard" id="rcard">
           <div class="rbrand"><img id="rbrandLogo" alt="SHOUT!"><span class="pill">QUIZ</span></div>
           <div class="rimgwrap"><img class="rimg" id="rimg" alt="" loading="lazy"><div class="remoji" id="remoji"></div></div>
@@ -317,6 +316,7 @@ function showResult(){
   $("sLn").href=`https://social-plugins.line.me/lineit/share?url=${su}&text=${st}`;
   $("quizScreen").classList.add("hidden");
   $("resultScreen").classList.remove("hidden");
+  document.querySelector(".brandbar").classList.add("hidden");
   buildQR(); fireConfetti(r.accent,r.accent2);
   window.scrollTo({top:0,behavior:"smooth"});
 }
@@ -342,6 +342,7 @@ function restart(){
   document.documentElement.style.setProperty('--accent','#721aea');
   document.documentElement.style.setProperty('--accent2','#5712b8');
   $("resultScreen").classList.add("hidden"); $("startScreen").classList.remove("hidden");
+  document.querySelector(".brandbar").classList.remove("hidden");
   window.scrollTo({top:0,behavior:"smooth"});
 }
 function wait(ms){ return new Promise(res=>setTimeout(res,ms)); }
