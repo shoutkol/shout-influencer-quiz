@@ -52,10 +52,11 @@
   .blob.b3{width:28vw;height:28vw;background:rgba(114,26,234,.12);top:45%;left:60%;animation-delay:-9s}
   @keyframes float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(3vw,2vw) scale(1.07)}66%{transform:translate(-2vw,2vw) scale(.95)}}
 
-  .wrap{position:relative;z-index:2;width:100%;max-width:600px;padding:22px 18px 64px;display:flex;flex-direction:column;align-items:center}
+  .wrap{position:relative;z-index:2;width:100%;max-width:600px;padding:22px 18px 64px;display:flex;flex-direction:column;align-items:center;min-height:100dvh}
+  #startScreen{flex:1;display:flex;flex-direction:column;justify-content:center}
 
   .brandbar{display:flex;flex-direction:column;align-items:center;gap:9px;margin-bottom:8px}
-  .brandbar img{height:45px;width:auto;display:block}
+  .brandbar img{height:62px;width:auto;display:block}
   .pill{font-weight:600;font-size:12.5px;letter-spacing:1.2px;padding:5px 13px;border-radius:999px;
     background:var(--purple-soft);color:var(--purple)}
 
@@ -63,7 +64,7 @@
   @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 
   /* ---------- START ---------- */
-  .hero{text-align:center;margin-top:34px}
+  .hero{text-align:center;margin-top:20px}
   .hero .kicker{font-weight:600;color:var(--orange);font-size:16px;margin-bottom:8px}
   .hero h1{font-weight:700;line-height:1.12;font-size:clamp(33px,8.5vw,50px);letter-spacing:-.5px}
   .hero h1 .p{color:var(--purple)} .hero h1 .o{color:var(--orange)}
@@ -109,10 +110,10 @@
   /* ---------- RESULT ---------- */
   .result{text-align:center}
   .rlabel{font-weight:600;color:var(--orange);font-size:14px;letter-spacing:.5px;margin-bottom:8px}
-  .rcard{position:relative;border-radius:24px;padding:22px 20px;margin-top:4px;background:var(--card);
+  .rcard{position:relative;border-radius:24px;padding:12px 20px 22px;margin-top:4px;background:var(--card);
     border:1px solid #eceaf6;box-shadow:0 20px 50px rgba(114,26,234,.13)}
   .rbrand{text-align:center;margin-bottom:6px;line-height:1}
-  .rbrand img{height:26px;width:auto;display:inline-block;vertical-align:middle}
+  .rbrand img{height:38px;width:auto;display:inline-block;vertical-align:middle}
   .rbrand .pill{margin-left:8px;vertical-align:middle;display:inline-block}
   .rimgwrap{position:relative;margin:8px auto 22px;max-width:224px;animation:pop .5s cubic-bezier(.3,1.4,.5,1) both}
   .rimg{width:100%;height:auto;display:block;border-radius:16px;border:3px solid var(--accent);background:#fff;box-shadow:0 10px 24px rgba(0,0,0,.12)}
@@ -181,8 +182,7 @@
     <!-- START -->
     <section class="screen" id="startScreen">
       <div class="hero">
-        <div class="kicker">ถ้าเกิดใหม่ ชาติหน้าเป็นอินฟลู</div>
-        <h1>คุณจะเป็น<br><span class="p">สาย</span><span class="o">ไหน?</span> <span class="em">🤳</span></h1>
+<h1>คุณจะเป็น<br><span class="p">สาย</span><span class="o">ไหน?</span> <span class="em">🤳</span></h1>
         <p>แบบทดสอบบุคลิกภาพฉบับ SHOUT!<br>เลือกคำตอบที่ <b>"เป็นคุณที่สุด"</b> แล้วมาดูกันว่าจริง ๆ แล้วคุณคืออินฟลูสายอะไร</p>
         <div class="chips">
           <span class="chip"><b>10</b> คำถาม</span>
@@ -206,7 +206,6 @@
     <!-- RESULT -->
     <section class="screen hidden" id="resultScreen">
       <div class="result">
-        <div class="rlabel">🎉 ผลลัพธ์ของคุณคือ</div>
         <div class="rcard" id="rcard">
           <div class="rbrand"><img id="rbrandLogo" alt="SHOUT!"><span class="pill">QUIZ</span></div>
           <div class="rimgwrap"><img class="rimg" id="rimg" alt="" loading="lazy"><div class="remoji" id="remoji"></div></div>
@@ -266,6 +265,7 @@ const SHARE_URL = "https://shoutkol.com/influencer-quiz";
 
 let current=0, scores={}, order=[], locked=false;
 const $=id=>document.getElementById(id);
+(function(){const b=document.querySelector('.brandbar'),s=document.getElementById('startScreen');if(b&&s)s.insertBefore(b,s.firstChild);}());
 
 function startQuiz(){
   current=0; scores={}; order=[]; locked=false;
