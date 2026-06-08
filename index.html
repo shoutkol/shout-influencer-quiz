@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>เกิดใหม่เป็นอินฟลูสายไหน? | SHOUT!</title>
+<title>คุณเกิดมาเพื่อเป็นอินฟลูฯสายไหน? | SHOUT!</title>
 <meta name="description" content="แบบทดสอบบุคลิกภาพฉบับ SHOUT! เลือกคำตอบที่เป็นคุณที่สุด แล้วมาดูกันว่าจริง ๆ แล้วคุณคืออินฟลูสายอะไร">
-<meta property="og:title" content="เกิดใหม่เป็นอินฟลูสายไหน? | SHOUT!">
+<meta property="og:title" content="คุณเกิดมาเพื่อเป็นอินฟลูฯสายไหน? | SHOUT!">
 <meta property="og:description" content="แบบทดสอบบุคลิกภาพฉบับ SHOUT! เลือกคำตอบที่เป็นคุณที่สุด แล้วมาดูกันว่าจริง ๆ แล้วคุณคืออินฟลูสายอะไร">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://shoutkol.com/influencer-quiz">
 <meta property="og:site_name" content="SHOUT!">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="เกิดใหม่เป็นอินฟลูสายไหน? | SHOUT!">
+<meta name="twitter:title" content="คุณเกิดมาเพื่อเป็นอินฟลูฯสายไหน? | SHOUT!">
 <meta name="twitter:description" content="แบบทดสอบบุคลิกภาพฉบับ SHOUT! เลือกคำตอบที่เป็นคุณที่สุด แล้วมาดูกันว่าจริง ๆ แล้วคุณคืออินฟลูสายอะไร">
 <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
 <link rel="icon" type="image/svg+xml" href="assets/favicon/favicon.svg">
@@ -389,9 +389,9 @@ async function shareResult(){
     let file=null;
     try{ file=await canvasToFile(canvas); }catch(e){}
     if(file && navigator.canShare && navigator.canShare({files:[file]})){
-      await navigator.share({files:[file], text, title:"เกิดใหม่เป็นอินฟลูสายไหน?"});
+      await navigator.share({files:[file], text, title:"คุณเกิดมาเพื่อเป็นอินฟลูฯสายไหน?"});
     }else if(navigator.share){
-      await navigator.share({text, title:"เกิดใหม่เป็นอินฟลูสายไหน?", url:SHARE_URL});
+      await navigator.share({text, title:"คุณเกิดมาเพื่อเป็นอินฟลูฯสายไหน?", url:SHARE_URL});
       downloadCanvas(canvas);
     }else{
       downloadCanvas(canvas);
